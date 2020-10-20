@@ -68,19 +68,17 @@ ZSH_THEME="miloshadzic"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python virtualenv virtualenvwrapper sublime)
+plugins=(git keychain gpg-agent python)
+
+# Source Funtoo Keychain before sourcing oh-my-zsh
+zstyle :omz:plugins:keychain agents gpg,ssh
+zstyle :omz:plugins:keychain identities id_rsa
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
-# Configure virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo "($(basename $VIRTUAL_ENV)) "
-}
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -103,6 +101,14 @@ function virtualenv_info {
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias python='python3'
-alias pip='pip3'
-alias vim='vi'
+
+# Add ~/.local/bin to path
+export PATH=$PATH:/home/dsuhr/.local/bin
+
+# Configure Go paths
+export PATH=$PATH:$(go env GOPATH)/bin
+export GOPATH=/home/dsuhr/go
+export GO111MODULE=on
+
+# Configure Kubernetes paths
+export KUBECONFIG=/home/dsuhr/.kube/configuration
